@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { CookingConfirmationModal } from "./components/CookingConfirmationModal";
 import { InventorySection } from "./components/InventorySection";
 import { RecipeRecommendations } from "./components/RecipeRecommendations";
 import { sampleIngredients } from "./data/sampleIngredients";
@@ -24,6 +25,7 @@ function App() {
   );
   const [statusMessage, setStatusMessage] =
     useState<StatusMessage | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   useEffect(() => {
     saveInventoryToStorage(inventory);
@@ -57,11 +59,26 @@ function App() {
     });
   }
 
-  function handleCookRecipe(recipe: Recipe) {
+  function handleSelectRecipe(recipe: Recipe) {
+    setSelectedRecipe(recipe);
+    setStatusMessage(null);
+  }
+
+  function handleCancelCooking() {
+    setSelectedRecipe(null);
+  }
+
+  function handleConfirmCooking() {
+    if (!selectedRecipe) {
+      return;
+    }
+
+    const recipe = selectedRecipe;
     const result = consumeIngredients(recipe, inventory);
 
     if (result.success) {
       setInventory(result.inventory);
+      setSelectedRecipe(null);
       setStatusMessage({
         tone: "success",
         text: `${recipe.name} 조리 완료. 사용한 재료를 차감했어요.`,
@@ -73,6 +90,7 @@ function App() {
       tone: "error",
       text: result.error,
     });
+    setSelectedRecipe(null);
   }
 
   return (
@@ -109,9 +127,18 @@ function App() {
         />
         <RecipeRecommendations
           recommendations={recommendations}
-          onCookRecipe={handleCookRecipe}
+          onCookRecipe={handleSelectRecipe}
         />
       </div>
+
+      {selectedRecipe ? (
+        <CookingConfirmationModal
+          recipe={selectedRecipe}
+          inventory={inventory}
+          onConfirm={handleConfirmCooking}
+          onCancel={handleCancelCooking}
+        />
+      ) : null}
     </main>
   );
 }

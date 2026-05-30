@@ -327,6 +327,69 @@ button {
   justify-self: start;
 }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(17, 23, 19, 0.45);
+}
+
+.cook-modal {
+  width: min(560px, 100%);
+  max-height: calc(100svh - 40px);
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--modal-shadow);
+}
+
+.modal-heading {
+  margin-bottom: 16px;
+}
+
+.consumption-table {
+  display: grid;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.consumption-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.4fr) minmax(90px, 0.8fr) minmax(
+      90px,
+      0.8fr
+    );
+  gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.consumption-row:first-child {
+  border-top: 0;
+}
+
+.consumption-header {
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
 @media (max-width: 1120px) {
   .workspace-grid {
     grid-template-columns: 1fr;
@@ -356,6 +419,14 @@ button {
   }
 
   .ingredient-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .consumption-row {
     grid-template-columns: 1fr;
   }
 }
