@@ -200,6 +200,7 @@ button:active {
   display: grid;
   gap: 10px;
   margin-top: 14px;
+  min-width: 0;
 }
 
 .ingredient-row,
@@ -213,7 +214,12 @@ button:active {
 .ingredient-row {
   display: grid;
   gap: 12px;
+  min-width: 0;
   padding: 13px;
+}
+
+.ingredient-row > * {
+  min-width: 0;
 }
 
 .ingredient-row.is-urgent {
@@ -231,6 +237,7 @@ button:active {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .ingredient-main strong,
@@ -249,6 +256,11 @@ button:active {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin: 0;
+  min-width: 0;
+}
+
+.ingredient-meta div {
+  min-width: 0;
 }
 
 .ingredient-meta dt {
@@ -261,6 +273,12 @@ button:active {
   margin: 0;
   color: var(--text);
   font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.ingredient-row .secondary-action {
+  justify-self: end;
+  white-space: nowrap;
 }
 
 .badge {
@@ -512,7 +530,7 @@ button:active {
   }
 
   .ingredient-row {
-    grid-template-columns: minmax(130px, 0.8fr) minmax(260px, 1.5fr) auto;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.5fr) max-content;
     align-items: center;
   }
 
@@ -562,6 +580,10 @@ button:active {
   .ingredient-meta,
   .consumption-row {
     grid-template-columns: 1fr;
+  }
+
+  .ingredient-row .secondary-action {
+    justify-self: stretch;
   }
 
   .secondary-action,
