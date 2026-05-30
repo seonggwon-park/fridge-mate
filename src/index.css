@@ -1,13 +1,18 @@
 :root {
-  --bg: #f7f8f3;
+  --bg: #f5f6f1;
   --surface: #ffffff;
-  --soft: #eef2e8;
-  --border: #dbe0d2;
+  --soft: #eef3e8;
+  --form-bg: #fbfcf8;
+  --empty-bg: #f8faf4;
+  --border: #dbe2d2;
+  --border-strong: #c7d0c0;
   --text: #27312b;
   --text-strong: #111713;
   --muted: #657064;
   --primary: #246b4f;
   --primary-hover: #1b573f;
+  --inventory-accent: #6d9f71;
+  --recipe-accent: #d39a3f;
   --focus: #35785f;
   --focus-ring: rgba(53, 120, 95, 0.2);
   --success-bg: #e8f5ec;
@@ -18,7 +23,15 @@
   --danger-text: #a33b22;
   --warning-bg: #fff6da;
   --warning-border: #e4c05d;
+  --warning-strong-bg: #f9df8b;
   --warning-text: #76590d;
+  --cold-bg: #e8f4fb;
+  --cold-text: #22627e;
+  --freezer-bg: #edf1ff;
+  --freezer-text: #394f9f;
+  --room-bg: #f0eadf;
+  --room-text: #6a5433;
+  --card-shadow: 0 10px 24px rgba(25, 36, 28, 0.06);
   --modal-shadow: 0 24px 70px rgba(17, 23, 19, 0.25);
   --sans:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -61,17 +74,11 @@ h2 {
 }
 
 h1 {
-  font-size: 36px;
-  line-height: 1.12;
+  font-size: clamp(29px, 5vw, 38px);
+  line-height: 1.14;
 }
 
 h2 {
-  font-size: 23px;
+  font-size: 22px;
   line-height: 1.2;
-}
-
-@media (max-width: 760px) {
-  h1 {
-    font-size: 29px;
-  }
 }

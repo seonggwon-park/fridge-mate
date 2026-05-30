@@ -46,8 +46,9 @@ export function CookingConfirmationModal({
         tabIndex={-1}
       >
         <div className="modal-heading">
-          <p className="eyebrow">Confirm cooking</p>
+          <p className="eyebrow">Cooking check</p>
           <h2 id="cook-modal-title">{recipe.name}</h2>
+          <p>요리하면 아래 재료가 차감돼요.</p>
         </div>
 
         <div className="consumption-table" role="table">
@@ -85,14 +86,14 @@ export function CookingConfirmationModal({
             className="secondary-action"
             onClick={onCancel}
           >
-            Cancel
+            취소
           </button>
           <button
             type="button"
             className="primary-action"
             onClick={onConfirm}
           >
-            Confirm cooking
+            확인하고 요리하기
           </button>
         </div>
       </div>

@@ -9,6 +9,10 @@ export function RecipeRecommendations({
   recommendations,
   onCookRecipe,
 }: RecipeRecommendationsProps) {
+  const hasCookableRecipe = recommendations.some(
+    (recommendation) => recommendation.canCook,
+  );
+
   return (
     <section className="workspace-section recommendations-section">
       <div className="section-heading">
@@ -16,23 +20,35 @@ export function RecipeRecommendations({
           <p className="eyebrow">Recommendations</p>
           <h2>오늘 만들 수 있는 메뉴</h2>
         </div>
-        <span className="section-count">{recommendations.length} recipes</span>
+        <span className="section-count">{recommendations.length}개</span>
       </div>
 
       <div className="recipe-list">
+        {!hasCookableRecipe ? (
+          <div className="empty-state">
+            <strong>바로 만들 수 있는 메뉴가 아직 없어요.</strong>
+            <span>부족한 재료를 하나만 추가해도 추천이 달라질 수 있어요.</span>
+          </div>
+        ) : null}
+
         {recommendations.map((recommendation) => (
-          <article className="recipe-card" key={recommendation.recipe.id}>
+          <article
+            className={`recipe-card ${
+              recommendation.canCook ? "can-cook-card" : ""
+            }`}
+            key={recommendation.recipe.id}
+          >
             <div className="recipe-card-header">
               <div>
                 <h3>{recommendation.recipe.name}</h3>
                 <p>{recommendation.recipe.description}</p>
               </div>
               <span
-                className={`status-pill ${
+                className={`badge status-pill ${
                   recommendation.canCook ? "can-cook" : "needs-more"
                 }`}
               >
-                {recommendation.canCook ? "가능" : "부족"}
+                {recommendation.canCook ? "바로 가능" : "재료 부족"}
               </span>
             </div>
 
@@ -75,7 +91,7 @@ export function RecipeRecommendations({
                 className="primary-action cook-action"
                 onClick={() => onCookRecipe(recommendation.recipe)}
               >
-                Cook this
+                요리하기
               </button>
             ) : null}
           </article>

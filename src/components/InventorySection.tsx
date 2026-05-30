@@ -24,7 +24,7 @@ const storageTypes: StorageType[] = ["fridge", "freezer", "pantry", "room"];
 const storageTypeLabels: Record<StorageType, string> = {
   fridge: "냉장",
   freezer: "냉동",
-  pantry: "상온 보관",
+  pantry: "상온",
   room: "실온",
 };
 
@@ -100,7 +100,7 @@ export function InventorySection({
           <p className="eyebrow">Inventory</p>
           <h2>냉장고 재료</h2>
         </div>
-        <span className="section-count">{inventory.length} items</span>
+        <span className="section-count">{inventory.length}개</span>
       </div>
 
       <form className="ingredient-form" onSubmit={handleSubmit}>
@@ -190,6 +190,13 @@ export function InventorySection({
       </form>
 
       <div className="inventory-list">
+        {inventory.length === 0 ? (
+          <div className="empty-state">
+            <strong>아직 등록된 재료가 없어요.</strong>
+            <span>자주 쓰는 재료 이름을 입력하면 단위와 소비기한을 추천해드려요.</span>
+          </div>
+        ) : null}
+
         {inventory.map((ingredient) => {
           const daysUntilExpiry = getDaysUntilExpiry(
             ingredient.expiryDate,
@@ -203,7 +210,10 @@ export function InventorySection({
               key={ingredient.id}
             >
               <div className="ingredient-main">
-                <strong>{ingredient.name}</strong>
+                <div className="ingredient-title">
+                  <strong>{ingredient.name}</strong>
+                  {isUrgent ? <span className="badge urgent">임박</span> : null}
+                </div>
                 <span>
                   {ingredient.quantity}
                   {getUnitLabel(ingredient.unit, ingredient.name)}
@@ -213,7 +223,15 @@ export function InventorySection({
               <dl className="ingredient-meta">
                 <div>
                   <dt>보관</dt>
-                  <dd>{storageTypeLabels[ingredient.storageType]}</dd>
+                  <dd>
+                    <span
+                      className={`badge storage ${getStorageBadgeClass(
+                        ingredient.storageType,
+                      )}`}
+                    >
+                      {storageTypeLabels[ingredient.storageType]}
+                    </span>
+                  </dd>
                 </div>
                 <div>
                   <dt>소비기한</dt>
@@ -260,4 +278,8 @@ function toUtcDay(dateKey: string): number {
   const [year, month, day] = dateKey.split("-").map(Number);
 
   return Date.UTC(year, month - 1, day) / 86_400_000;
+}
+
+function getStorageBadgeClass(storageType: StorageType): string {
+  return `storage-${storageType}`;
 }

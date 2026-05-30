@@ -101,13 +101,13 @@ function App() {
           <h1>먹을 수 있는 메뉴부터 바로 고르기</h1>
         </div>
         <div className="header-actions">
-          <div className="today-badge">Today {today}</div>
+          <div className="today-badge">오늘 {today}</div>
           <button
             type="button"
             className="secondary-action"
             onClick={handleResetDemoData}
           >
-            Reset demo data
+            데모 재료 초기화
           </button>
         </div>
       </header>
