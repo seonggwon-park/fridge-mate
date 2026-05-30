@@ -42,12 +42,13 @@ export function RecipeRecommendations({
               <span>{recommendation.recipe.cookTimeMinutes}분</span>
             </div>
 
-            {recommendation.expiryUrgency > 0 ? (
-              <p className="urgency-note">
-                곧 소비할 재료:{" "}
-                {recommendation.usedExpiringIngredientNames.join(", ")}
-              </p>
-            ) : null}
+            <p
+              className={`recommendation-explanation ${
+                recommendation.expiryUrgency > 0 ? "urgency-note" : ""
+              }`}
+            >
+              {recommendation.explanation}
+            </p>
 
             {recommendation.missingIngredients.length > 0 ? (
               <div className="missing-ingredients">

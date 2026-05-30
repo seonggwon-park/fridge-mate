@@ -60,6 +60,7 @@ export interface RecommendationResult {
   score: number;
   matchRate: number;
   expiryUrgency: number;
+  explanation: string;
   missingIngredients: MissingIngredient[];
   usedExpiringIngredientNames: string[];
   scoreBreakdown: ScoreBreakdown;

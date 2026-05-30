@@ -282,6 +282,19 @@ button {
   font-weight: 700;
 }
 
+.recommendation-explanation {
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.recommendation-explanation.urgency-note {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
 .missing-ingredients {
   display: grid;
   gap: 6px;

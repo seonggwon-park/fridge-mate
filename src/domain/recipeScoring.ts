@@ -19,6 +19,12 @@ interface IngredientAvailability {
 interface ExpiryUrgencyResult {
   expiryUrgency: number;
   usedExpiringIngredientNames: string[];
+  mostUrgentIngredient: ExpiringIngredientUsage | null;
+}
+
+interface ExpiringIngredientUsage {
+  name: string;
+  daysUntilExpiry: number;
 }
 
 export function recommendRecipes(
@@ -89,6 +95,11 @@ export function scoreRecipe(
     score,
     matchRate,
     expiryUrgency: expiryUrgencyResult.expiryUrgency,
+    explanation: buildRecommendationExplanation(
+      canCook,
+      missingIngredients,
+      expiryUrgencyResult.mostUrgentIngredient,
+    ),
     missingIngredients,
     usedExpiringIngredientNames:
       expiryUrgencyResult.usedExpiringIngredientNames,
@@ -182,14 +193,14 @@ function calculateExpiryUrgency(
   today: string | Date,
 ): ExpiryUrgencyResult {
   const todayDay = toUtcDay(today);
-  const expiringIngredientNames = new Set<string>();
+  const expiringIngredientUsages: ExpiringIngredientUsage[] = [];
   let expiryUrgency = 0;
 
   for (const requiredIngredient of recipe.ingredients) {
     const normalizedRequiredName = normalizeIngredientName(
       requiredIngredient.name,
     );
-    let highestIngredientUrgency = 0;
+    let closestDaysUntilExpiry: number | null = null;
 
     for (const ingredient of inventory) {
       const isSameIngredient =
@@ -207,23 +218,79 @@ function calculateExpiryUrgency(
         daysUntilExpiry >= 0 &&
         daysUntilExpiry <= expiryUrgencyWindowDays
       ) {
-        highestIngredientUrgency = Math.max(
-          highestIngredientUrgency,
-          expiryUrgencyWindowDays - daysUntilExpiry + 1,
+        closestDaysUntilExpiry = Math.min(
+          closestDaysUntilExpiry ?? daysUntilExpiry,
+          daysUntilExpiry,
         );
       }
     }
 
-    if (highestIngredientUrgency > 0) {
-      expiryUrgency += highestIngredientUrgency;
-      expiringIngredientNames.add(requiredIngredient.name);
+    if (closestDaysUntilExpiry !== null) {
+      expiryUrgency +=
+        expiryUrgencyWindowDays - closestDaysUntilExpiry + 1;
+      expiringIngredientUsages.push({
+        name: requiredIngredient.name,
+        daysUntilExpiry: closestDaysUntilExpiry,
+      });
     }
   }
 
+  expiringIngredientUsages.sort(
+    (left, right) =>
+      left.daysUntilExpiry - right.daysUntilExpiry ||
+      left.name.localeCompare(right.name, "ko-KR"),
+  );
+
   return {
     expiryUrgency,
-    usedExpiringIngredientNames: [...expiringIngredientNames],
+    usedExpiringIngredientNames: expiringIngredientUsages.map(
+      (ingredient) => ingredient.name,
+    ),
+    mostUrgentIngredient: expiringIngredientUsages[0] ?? null,
   };
+}
+
+function buildRecommendationExplanation(
+  canCook: boolean,
+  missingIngredients: MissingIngredient[],
+  mostUrgentIngredient: ExpiringIngredientUsage | null,
+): string {
+  const explanationParts: string[] = [];
+
+  if (mostUrgentIngredient) {
+    explanationParts.push(
+      `${mostUrgentIngredient.name} 유통기한이 ${formatDaysUntilExpiry(
+        mostUrgentIngredient.daysUntilExpiry,
+      )} 우선 추천했어요.`,
+    );
+  }
+
+  if (canCook) {
+    explanationParts.push("지금 가진 재료로 바로 만들 수 있어요.");
+  } else if (missingIngredients.length === 1) {
+    explanationParts.push(
+      `${missingIngredients[0].name}만 있으면 만들 수 있어요.`,
+    );
+  } else {
+    const visibleIngredientNames = missingIngredients
+      .slice(0, 2)
+      .map((ingredient) => ingredient.name)
+      .join(", ");
+
+    explanationParts.push(
+      `${visibleIngredientNames} 등 ${missingIngredients.length}개 재료가 부족해요.`,
+    );
+  }
+
+  return explanationParts.join(" ");
+}
+
+function formatDaysUntilExpiry(daysUntilExpiry: number): string {
+  if (daysUntilExpiry === 0) {
+    return "오늘까지라서";
+  }
+
+  return `${daysUntilExpiry}일 남아서`;
 }
 
 function normalizeIngredientName(name: string): string {
