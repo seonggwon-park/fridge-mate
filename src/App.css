@@ -108,10 +108,20 @@
 .ingredient-form {
   display: grid;
   gap: 10px;
+  min-width: 0;
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--form-bg);
+}
+
+.ingredient-form > * {
+  min-width: 0;
+}
+
+.ingredient-form .primary-action {
+  align-self: end;
+  width: 100%;
 }
 
 label {
@@ -535,10 +545,10 @@ button:active {
   }
 
   .ingredient-form {
-    grid-template-columns: minmax(170px, 1.4fr) minmax(92px, 0.7fr) minmax(
-        98px,
-        0.7fr
-      ) minmax(112px, 0.8fr) minmax(140px, 0.9fr) auto;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, 118px), 1fr)
+    );
     align-items: end;
   }
 
