@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { InventorySection } from "./components/InventorySection";
 import { RecipeRecommendations } from "./components/RecipeRecommendations";
 import { sampleIngredients } from "./data/sampleIngredients";
@@ -6,6 +6,10 @@ import { sampleRecipes } from "./data/sampleRecipes";
 import { consumeIngredients } from "./domain/inventory";
 import { recommendRecipes } from "./domain/recipeScoring";
 import type { Ingredient, Recipe } from "./domain/types";
+import {
+  loadInventoryFromStorage,
+  saveInventoryToStorage,
+} from "./storage/inventoryStorage";
 import "./App.css";
 
 interface StatusMessage {
@@ -16,10 +20,14 @@ interface StatusMessage {
 function App() {
   const [today] = useState(getTodayDateKey);
   const [inventory, setInventory] = useState<Ingredient[]>(
-    sampleIngredients,
+    getInitialInventory,
   );
   const [statusMessage, setStatusMessage] =
     useState<StatusMessage | null>(null);
+
+  useEffect(() => {
+    saveInventoryToStorage(inventory);
+  }, [inventory]);
 
   const recommendations = useMemo(
     () => recommendRecipes(sampleRecipes, inventory, today),
@@ -39,6 +47,14 @@ function App() {
       currentInventory.filter((ingredient) => ingredient.id !== ingredientId),
     );
     setStatusMessage(null);
+  }
+
+  function handleResetDemoData() {
+    setInventory(sampleIngredients.map((ingredient) => ({ ...ingredient })));
+    setStatusMessage({
+      tone: "success",
+      text: "Demo inventory restored.",
+    });
   }
 
   function handleCookRecipe(recipe: Recipe) {
@@ -66,7 +82,16 @@ function App() {
           <p className="eyebrow">FridgeMate MVP</p>
           <h1>먹을 수 있는 메뉴부터 바로 고르기</h1>
         </div>
-        <div className="today-badge">Today {today}</div>
+        <div className="header-actions">
+          <div className="today-badge">Today {today}</div>
+          <button
+            type="button"
+            className="secondary-action"
+            onClick={handleResetDemoData}
+          >
+            Reset demo data
+          </button>
+        </div>
       </header>
 
       {statusMessage ? (
@@ -98,6 +123,13 @@ function getTodayDateKey(): string {
   const day = String(today.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
+}
+
+function getInitialInventory(): Ingredient[] {
+  return (
+    loadInventoryFromStorage() ??
+    sampleIngredients.map((ingredient) => ({ ...ingredient }))
+  );
 }
 
 export default App;

@@ -35,6 +35,12 @@
   font-weight: 700;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .status-message {
   margin-bottom: 18px;
   padding: 12px 14px;
@@ -324,6 +330,11 @@ button {
   .recipe-card-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .header-actions {
+    align-items: stretch;
+    width: 100%;
   }
 
   .ingredient-form,
