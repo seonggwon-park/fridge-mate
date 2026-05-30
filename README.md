@@ -2,6 +2,8 @@
 
 FridgeMate는 냉장고에 있는 재료를 바탕으로 지금 만들 수 있는 요리를 추천하고, 조리 후 재료 수량을 자동으로 차감하는 local-first 냉장고 관리 MVP입니다.
 
+Demo: [https://fridge-mate-alpha.vercel.app/](https://fridge-mate-alpha.vercel.app/)
+
 ## 문제 정의
 
 대학생, 1인 가구, 요리 초보자는 냉장고에 무엇이 있는지 잊기 쉽고, 소비기한이 임박한 재료를 제때 쓰지 못해 음식물 쓰레기가 생기기 쉽습니다. FridgeMate는 보유 재료를 입력하면 바로 만들 수 있는 메뉴를 추천하고, 소비기한이 가까운 재료를 우선 활용하도록 도와줍니다.
@@ -73,6 +75,12 @@ inventory -> recommendation -> cook -> inventory update
 - CSS
 - localStorage
 - Local static sample data
+
+## Deployment
+
+이 앱은 Vercel에 배포되어 있습니다.
+
+- Demo: [https://fridge-mate-alpha.vercel.app/](https://fridge-mate-alpha.vercel.app/)
 
 ## Project Structure
 
