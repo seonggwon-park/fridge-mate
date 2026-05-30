@@ -1,6 +1,10 @@
 import { useEffect, useRef } from "react";
 import { consumeIngredients } from "../domain/inventory";
-import type { Ingredient, Recipe, RecipeIngredient } from "../domain/types";
+import {
+  aggregateRecipeIngredients,
+  getIngredientUnitKey,
+} from "../domain/recipeIngredients";
+import type { Ingredient, Recipe, Unit } from "../domain/types";
 
 interface CookingConfirmationModalProps {
   recipe: Recipe;
@@ -11,7 +15,7 @@ interface CookingConfirmationModalProps {
 
 interface ConsumptionPreviewRow {
   name: string;
-  unit: string;
+  unit: Unit;
   requiredQuantity: number;
   currentQuantity: number;
   quantityAfterCooking: number;
@@ -108,7 +112,7 @@ function buildConsumptionPreview(
   const result = consumeIngredients(recipe, inventory);
   const inventoryAfterCooking = result.success ? result.inventory : inventory;
 
-  return mergeRecipeIngredients(recipe.ingredients).map(
+  return aggregateRecipeIngredients(recipe.ingredients).map(
     (requiredIngredient) => ({
       name: requiredIngredient.name,
       unit: requiredIngredient.unit,
@@ -127,47 +131,18 @@ function buildConsumptionPreview(
   );
 }
 
-function mergeRecipeIngredients(
-  recipeIngredients: RecipeIngredient[],
-): RecipeIngredient[] {
-  const mergedIngredients = new Map<string, RecipeIngredient>();
-
-  for (const recipeIngredient of recipeIngredients) {
-    const key = getIngredientKey(
-      recipeIngredient.name,
-      recipeIngredient.unit,
-    );
-    const existingIngredient = mergedIngredients.get(key);
-
-    if (existingIngredient) {
-      mergedIngredients.set(key, {
-        ...existingIngredient,
-        quantity: existingIngredient.quantity + recipeIngredient.quantity,
-      });
-    } else {
-      mergedIngredients.set(key, { ...recipeIngredient });
-    }
-  }
-
-  return [...mergedIngredients.values()];
-}
-
 function getInventoryQuantity(
   inventory: Ingredient[],
   ingredientName: string,
-  unit: string,
+  unit: Unit,
 ): number {
   return inventory
     .filter(
       (ingredient) =>
-        getIngredientKey(ingredient.name, ingredient.unit) ===
-        getIngredientKey(ingredientName, unit),
+        getIngredientUnitKey(ingredient.name, ingredient.unit) ===
+        getIngredientUnitKey(ingredientName, unit),
     )
     .reduce((totalQuantity, ingredient) => {
       return totalQuantity + ingredient.quantity;
     }, 0);
-}
-
-function getIngredientKey(name: string, unit: string): string {
-  return `${name.trim().toLocaleLowerCase("ko-KR")}::${unit}`;
 }

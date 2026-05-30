@@ -2,9 +2,11 @@ import type {
   Ingredient,
   MissingIngredient,
   Recipe,
+  RecipeIngredient,
   RecommendationResult,
   Unit,
 } from "./types";
+import { aggregateRecipeIngredients } from "./recipeIngredients";
 
 const expiryUrgencyWindowDays = 3;
 const expiryUrgencyScoreWeight = 5;
@@ -42,10 +44,11 @@ export function scoreRecipe(
   inventory: Ingredient[],
   today: string | Date,
 ): RecommendationResult {
+  const requiredIngredients = aggregateRecipeIngredients(recipe.ingredients);
   const missingIngredients: MissingIngredient[] = [];
   let totalFulfillmentRate = 0;
 
-  for (const requiredIngredient of recipe.ingredients) {
+  for (const requiredIngredient of requiredIngredients) {
     const availability = getIngredientAvailability(
       requiredIngredient.name,
       requiredIngredient.unit,
@@ -73,12 +76,12 @@ export function scoreRecipe(
   }
 
   const matchRate =
-    recipe.ingredients.length === 0
+    requiredIngredients.length === 0
       ? 1
-      : totalFulfillmentRate / recipe.ingredients.length;
+      : totalFulfillmentRate / requiredIngredients.length;
   const canCook = missingIngredients.length === 0;
   const expiryUrgencyResult = calculateExpiryUrgency(
-    recipe,
+    requiredIngredients,
     inventory,
     today,
   );
@@ -188,7 +191,7 @@ function buildMissingIngredient(
 }
 
 function calculateExpiryUrgency(
-  recipe: Recipe,
+  requiredIngredients: RecipeIngredient[],
   inventory: Ingredient[],
   today: string | Date,
 ): ExpiryUrgencyResult {
@@ -196,7 +199,7 @@ function calculateExpiryUrgency(
   const expiringIngredientUsages: ExpiringIngredientUsage[] = [];
   let expiryUrgency = 0;
 
-  for (const requiredIngredient of recipe.ingredients) {
+  for (const requiredIngredient of requiredIngredients) {
     const normalizedRequiredName = normalizeIngredientName(
       requiredIngredient.name,
     );

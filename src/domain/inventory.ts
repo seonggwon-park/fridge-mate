@@ -6,6 +6,7 @@ import type {
   RecipeIngredient,
   Unit,
 } from "./types";
+import { aggregateRecipeIngredients } from "./recipeIngredients";
 
 interface IngredientAvailability {
   availableQuantity: number;
@@ -28,7 +29,9 @@ export function consumeIngredients(
     };
   }
 
-  const consumedInventory = recipe.ingredients.reduce(
+  const consumedInventory = aggregateRecipeIngredients(
+    recipe.ingredients,
+  ).reduce(
     consumeRecipeIngredient,
     inventoryCopy,
   );
@@ -84,26 +87,28 @@ function getMissingIngredients(
   recipe: Recipe,
   inventory: Ingredient[],
 ): MissingIngredient[] {
-  return recipe.ingredients.flatMap((requiredIngredient) => {
-    const availability = getIngredientAvailability(
-      requiredIngredient.name,
-      requiredIngredient.unit,
-      inventory,
-    );
-
-    if (availability.availableQuantity >= requiredIngredient.quantity) {
-      return [];
-    }
-
-    return [
-      buildMissingIngredient(
+  return aggregateRecipeIngredients(recipe.ingredients).flatMap(
+    (requiredIngredient) => {
+      const availability = getIngredientAvailability(
         requiredIngredient.name,
-        requiredIngredient.quantity,
         requiredIngredient.unit,
-        availability,
-      ),
-    ];
-  });
+        inventory,
+      );
+
+      if (availability.availableQuantity >= requiredIngredient.quantity) {
+        return [];
+      }
+
+      return [
+        buildMissingIngredient(
+          requiredIngredient.name,
+          requiredIngredient.quantity,
+          requiredIngredient.unit,
+          availability,
+        ),
+      ];
+    },
+  );
 }
 
 function getIngredientAvailability(
