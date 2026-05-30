@@ -1,5 +1,11 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
+import {
+  commonIngredients,
+  findCommonIngredient,
+  getSuggestedExpiryDate,
+  getUnitLabel,
+} from "../data/commonIngredients";
 import type { Ingredient, StorageType, Unit } from "../domain/types";
 
 const units: Unit[] = [
@@ -37,9 +43,29 @@ export function InventorySection({
 }: InventorySectionProps) {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("1");
-  const [unit, setUnit] = useState<Unit>("g");
+  const [unit, setUnit] = useState<Unit | "">("");
   const [storageType, setStorageType] = useState<StorageType>("fridge");
-  const [expiryDate, setExpiryDate] = useState(today);
+  const [expiryDate, setExpiryDate] = useState("");
+  const knownIngredient = findCommonIngredient(name);
+
+  function handleNameChange(nextName: string) {
+    setName(nextName);
+
+    const nextKnownIngredient = findCommonIngredient(nextName);
+
+    if (!nextKnownIngredient) {
+      return;
+    }
+
+    setUnit((currentUnit) => currentUnit || nextKnownIngredient.unit);
+    setExpiryDate((currentExpiryDate) => {
+      return (
+        currentExpiryDate ||
+        getSuggestedExpiryDate(nextKnownIngredient.name, today) ||
+        currentExpiryDate
+      );
+    });
+  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,7 +73,7 @@ export function InventorySection({
     const parsedQuantity = Number(quantity);
     const trimmedName = name.trim();
 
-    if (!trimmedName || parsedQuantity <= 0 || !expiryDate) {
+    if (!trimmedName || parsedQuantity <= 0 || !unit || !expiryDate) {
       return;
     }
 
@@ -62,9 +88,9 @@ export function InventorySection({
 
     setName("");
     setQuantity("1");
-    setUnit("g");
+    setUnit("");
     setStorageType("fridge");
-    setExpiryDate(today);
+    setExpiryDate("");
   }
 
   return (
@@ -81,10 +107,24 @@ export function InventorySection({
         <label>
           재료명
           <input
+            list="common-ingredient-suggestions"
             value={name}
-            onChange={(event) => setName(event.target.value)}
-            placeholder="예: 양파"
+            onChange={(event) => handleNameChange(event.target.value)}
+            placeholder="예: 계란"
           />
+          <datalist id="common-ingredient-suggestions">
+            {commonIngredients.map((ingredient) => (
+              <option key={ingredient.name} value={ingredient.name}>
+                {ingredient.unitLabel} · 소비기한 {ingredient.expiryDays}일
+              </option>
+            ))}
+          </datalist>
+          {knownIngredient ? (
+            <span className="field-hint">
+              추천: {knownIngredient.unitLabel}, 소비기한 +
+              {knownIngredient.expiryDays}일
+            </span>
+          ) : null}
         </label>
 
         <label>
@@ -102,11 +142,18 @@ export function InventorySection({
           단위
           <select
             value={unit}
-            onChange={(event) => setUnit(event.target.value as Unit)}
+            onChange={(event) =>
+              setUnit(
+                event.target.value === ""
+                  ? ""
+                  : (event.target.value as Unit),
+              )
+            }
           >
+            <option value="">단위 선택</option>
             {units.map((unitOption) => (
               <option key={unitOption} value={unitOption}>
-                {unitOption}
+                {getUnitLabel(unitOption)}
               </option>
             ))}
           </select>
@@ -159,7 +206,7 @@ export function InventorySection({
                 <strong>{ingredient.name}</strong>
                 <span>
                   {ingredient.quantity}
-                  {ingredient.unit}
+                  {getUnitLabel(ingredient.unit, ingredient.name)}
                 </span>
               </div>
 
