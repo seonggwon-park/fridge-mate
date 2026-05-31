@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { CookingConfirmationModal } from "./components/CookingConfirmationModal";
 import { InventorySection } from "./components/InventorySection";
+import { RecipeDetailModal } from "./components/RecipeDetailModal";
 import { RecipeRecommendations } from "./components/RecipeRecommendations";
 import { sampleIngredients } from "./data/sampleIngredients";
 import { sampleRecipes } from "./data/sampleRecipes";
 import { consumeIngredients } from "./domain/inventory";
 import { recommendRecipes } from "./domain/recipeScoring";
-import type { Ingredient, Recipe } from "./domain/types";
+import type { Ingredient, Recipe, RecommendationResult } from "./domain/types";
 import {
   loadInventoryFromStorage,
   saveInventoryToStorage,
@@ -26,6 +27,8 @@ function App() {
   const [statusMessage, setStatusMessage] =
     useState<StatusMessage | null>(null);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [selectedRecipeDetail, setSelectedRecipeDetail] =
+    useState<RecommendationResult | null>(null);
 
   useEffect(() => {
     saveInventoryToStorage(inventory);
@@ -62,6 +65,19 @@ function App() {
   function handleSelectRecipe(recipe: Recipe) {
     setSelectedRecipe(recipe);
     setStatusMessage(null);
+  }
+
+  function handleViewRecipe(recommendation: RecommendationResult) {
+    setSelectedRecipeDetail(recommendation);
+  }
+
+  function handleCloseRecipeDetail() {
+    setSelectedRecipeDetail(null);
+  }
+
+  function handleCookRecipeFromDetail(recipe: Recipe) {
+    setSelectedRecipeDetail(null);
+    handleSelectRecipe(recipe);
   }
 
   function handleCancelCooking() {
@@ -128,8 +144,17 @@ function App() {
         <RecipeRecommendations
           recommendations={recommendations}
           onCookRecipe={handleSelectRecipe}
+          onViewRecipe={handleViewRecipe}
         />
       </div>
+
+      {selectedRecipeDetail ? (
+        <RecipeDetailModal
+          recommendation={selectedRecipeDetail}
+          onClose={handleCloseRecipeDetail}
+          onCookRecipe={handleCookRecipeFromDetail}
+        />
+      ) : null}
 
       {selectedRecipe ? (
         <CookingConfirmationModal

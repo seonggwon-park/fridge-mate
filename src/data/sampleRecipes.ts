@@ -7,10 +7,17 @@ export const sampleRecipes: Recipe[] = [
     description: "밥과 계란으로 빠르게 만드는 기본 볶음밥",
     servings: 1,
     cookTimeMinutes: 10,
+    difficulty: "쉬움",
     tags: ["한그릇", "초간단"],
     ingredients: [
       { name: "밥", quantity: 1, unit: "serving" },
       { name: "계란", quantity: 2, unit: "ea" },
+    ],
+    steps: [
+      "계란을 그릇에 풀어 준비해요.",
+      "팬에 기름을 두르고 계란을 먼저 부드럽게 볶아요.",
+      "밥을 넣고 계란과 잘 섞이도록 볶아요.",
+      "간장이나 소금으로 간을 맞춘 뒤 따뜻할 때 먹어요.",
     ],
   },
   {
@@ -19,11 +26,18 @@ export const sampleRecipes: Recipe[] = [
     description: "남은 김치와 밥으로 만드는 든든한 한 끼",
     servings: 1,
     cookTimeMinutes: 12,
+    difficulty: "쉬움",
     tags: ["한그릇", "김치"],
     ingredients: [
       { name: "밥", quantity: 1, unit: "serving" },
       { name: "김치", quantity: 120, unit: "g" },
       { name: "계란", quantity: 1, unit: "ea" },
+    ],
+    steps: [
+      "김치는 먹기 좋은 크기로 잘라요.",
+      "팬에 김치를 넣고 중불에서 2분 정도 볶아요.",
+      "밥을 넣고 김치와 고르게 섞어 볶아요.",
+      "계란은 프라이로 올리거나 밥과 함께 볶아 마무리해요.",
     ],
   },
   {
@@ -32,11 +46,18 @@ export const sampleRecipes: Recipe[] = [
     description: "자취생 기본템으로 만드는 빠른 아침 메뉴",
     servings: 1,
     cookTimeMinutes: 5,
+    difficulty: "쉬움",
     tags: ["아침", "초간단"],
     ingredients: [
       { name: "밥", quantity: 1, unit: "serving" },
       { name: "계란", quantity: 1, unit: "ea" },
       { name: "간장", quantity: 1, unit: "tbsp" },
+    ],
+    steps: [
+      "따뜻한 밥을 그릇에 담아요.",
+      "계란을 프라이하거나 반숙으로 익혀 밥 위에 올려요.",
+      "간장을 둘러 넣고 취향에 따라 참기름을 조금 더해요.",
+      "노른자를 터뜨려 전체를 잘 비벼 먹어요.",
     ],
   },
   {
@@ -45,10 +66,17 @@ export const sampleRecipes: Recipe[] = [
     description: "두부와 김치만으로도 충분한 간단 반찬",
     servings: 1,
     cookTimeMinutes: 10,
+    difficulty: "쉬움",
     tags: ["반찬", "김치"],
     ingredients: [
       { name: "두부", quantity: 150, unit: "g" },
       { name: "김치", quantity: 150, unit: "g" },
+    ],
+    steps: [
+      "두부는 먹기 좋은 두께로 썰어요.",
+      "끓는 물에 두부를 2분 정도 데워 물기를 빼요.",
+      "팬에 김치를 넣고 중불에서 살짝 볶아요.",
+      "접시에 두부와 볶은 김치를 나란히 담아 먹어요.",
     ],
   },
   {
@@ -57,11 +85,18 @@ export const sampleRecipes: Recipe[] = [
     description: "참치캔으로 만드는 편의점 스타일 덮밥",
     servings: 1,
     cookTimeMinutes: 8,
+    difficulty: "쉬움",
     tags: ["한그릇", "참치"],
     ingredients: [
       { name: "밥", quantity: 1, unit: "serving" },
       { name: "참치캔", quantity: 1, unit: "ea" },
       { name: "마요네즈", quantity: 2, unit: "tbsp" },
+    ],
+    steps: [
+      "참치캔은 기름이나 물을 가볍게 빼요.",
+      "따뜻한 밥을 그릇에 담고 참치를 올려요.",
+      "마요네즈를 뿌리고 전체를 가볍게 섞어요.",
+      "간이 부족하면 간장이나 김가루를 조금 더해요.",
     ],
   },
   {
@@ -70,10 +105,17 @@ export const sampleRecipes: Recipe[] = [
     description: "가볍게 먹기 좋은 단백질 샐러드",
     servings: 1,
     cookTimeMinutes: 10,
+    difficulty: "쉬움",
     tags: ["샐러드", "단백질"],
     ingredients: [
       { name: "닭가슴살", quantity: 150, unit: "g" },
       { name: "상추", quantity: 80, unit: "g" },
+    ],
+    steps: [
+      "상추는 씻어서 물기를 빼고 한입 크기로 찢어요.",
+      "닭가슴살은 데우거나 팬에 살짝 구워요.",
+      "그릇에 상추를 깔고 닭가슴살을 올려요.",
+      "원하는 드레싱을 조금 뿌려 가볍게 섞어요.",
     ],
   },
   {
@@ -82,10 +124,17 @@ export const sampleRecipes: Recipe[] = [
     description: "계란을 넣어 더 든든한 기본 라면",
     servings: 1,
     cookTimeMinutes: 7,
+    difficulty: "쉬움",
     tags: ["분식", "초간단"],
     ingredients: [
       { name: "라면", quantity: 1, unit: "pack" },
       { name: "계란", quantity: 1, unit: "ea" },
+    ],
+    steps: [
+      "냄비에 물을 넣고 끓여요.",
+      "물이 끓으면 면과 스프를 넣어요.",
+      "면이 풀리면 계란을 넣고 원하는 익힘 정도로 끓여요.",
+      "면이 알맞게 익으면 그릇에 옮겨 담아요.",
     ],
   },
   {
@@ -94,11 +143,18 @@ export const sampleRecipes: Recipe[] = [
     description: "밥과 계란으로 만드는 부드러운 한 그릇",
     servings: 1,
     cookTimeMinutes: 15,
+    difficulty: "보통",
     tags: ["한그릇", "계란"],
     ingredients: [
       { name: "밥", quantity: 1, unit: "serving" },
       { name: "계란", quantity: 2, unit: "ea" },
       { name: "케첩", quantity: 2, unit: "tbsp" },
+    ],
+    steps: [
+      "밥을 팬에 넣고 케첩 1큰술과 함께 볶아요.",
+      "볶은 밥을 접시에 담아 모양을 잡아요.",
+      "계란을 풀어 약한 불에서 넓게 익혀요.",
+      "익힌 계란을 밥 위에 덮고 남은 케첩을 뿌려요.",
     ],
   },
   {
@@ -107,11 +163,19 @@ export const sampleRecipes: Recipe[] = [
     description: "김치, 두부, 참치캔으로 끓이는 간단 찌개",
     servings: 2,
     cookTimeMinutes: 20,
+    difficulty: "보통",
     tags: ["찌개", "김치"],
     ingredients: [
       { name: "김치", quantity: 200, unit: "g" },
       { name: "두부", quantity: 150, unit: "g" },
       { name: "참치캔", quantity: 1, unit: "ea" },
+    ],
+    steps: [
+      "김치는 먹기 좋은 크기로 자르고 두부는 큼직하게 썰어요.",
+      "냄비에 김치를 넣고 2분 정도 볶아요.",
+      "물과 참치캔을 넣고 중불에서 끓여요.",
+      "국물이 끓으면 두부를 넣고 5분 더 끓여요.",
+      "간을 보고 필요하면 소금이나 간장을 조금 더해요.",
     ],
   },
   {
@@ -120,11 +184,18 @@ export const sampleRecipes: Recipe[] = [
     description: "두부를 넣은 기본 된장찌개",
     servings: 2,
     cookTimeMinutes: 20,
+    difficulty: "보통",
     tags: ["찌개", "국물"],
     ingredients: [
       { name: "두부", quantity: 150, unit: "g" },
       { name: "된장", quantity: 2, unit: "tbsp" },
       { name: "애호박", quantity: 100, unit: "g" },
+    ],
+    steps: [
+      "두부와 애호박은 한입 크기로 썰어요.",
+      "냄비에 물을 끓이고 된장을 풀어요.",
+      "애호박을 먼저 넣고 5분 정도 끓여요.",
+      "두부를 넣고 한 번 더 끓인 뒤 간을 맞춰요.",
     ],
   },
   {
@@ -133,11 +204,18 @@ export const sampleRecipes: Recipe[] = [
     description: "식빵과 단백질 재료로 만드는 간단 도시락",
     servings: 1,
     cookTimeMinutes: 10,
+    difficulty: "쉬움",
     tags: ["도시락", "브런치"],
     ingredients: [
       { name: "식빵", quantity: 2, unit: "slice" },
       { name: "계란", quantity: 1, unit: "ea" },
       { name: "닭가슴살", quantity: 80, unit: "g" },
+    ],
+    steps: [
+      "계란은 프라이로 익히고 닭가슴살은 데워요.",
+      "식빵은 토스터나 팬에 살짝 구워요.",
+      "식빵 위에 계란과 닭가슴살을 올려요.",
+      "다른 식빵으로 덮고 먹기 좋게 반으로 잘라요.",
     ],
   },
   {
@@ -146,11 +224,18 @@ export const sampleRecipes: Recipe[] = [
     description: "김치를 곁들인 매콤한 비빔국수",
     servings: 1,
     cookTimeMinutes: 12,
+    difficulty: "쉬움",
     tags: ["면", "매콤"],
     ingredients: [
       { name: "소면", quantity: 100, unit: "g" },
       { name: "김치", quantity: 80, unit: "g" },
       { name: "고추장", quantity: 1, unit: "tbsp" },
+    ],
+    steps: [
+      "끓는 물에 소면을 삶고 찬물에 헹궈 물기를 빼요.",
+      "김치는 작게 썰어 준비해요.",
+      "그릇에 소면, 김치, 고추장을 넣어요.",
+      "면과 양념이 고르게 섞이도록 비벼요.",
     ],
   },
   {
@@ -159,10 +244,17 @@ export const sampleRecipes: Recipe[] = [
     description: "파스타면과 소스로 만드는 쉬운 점심",
     servings: 1,
     cookTimeMinutes: 15,
+    difficulty: "쉬움",
     tags: ["면", "양식"],
     ingredients: [
       { name: "파스타면", quantity: 100, unit: "g" },
       { name: "토마토소스", quantity: 150, unit: "g" },
+    ],
+    steps: [
+      "끓는 물에 소금을 조금 넣고 파스타면을 삶아요.",
+      "면이 익으면 면수 몇 숟가락을 남기고 물을 빼요.",
+      "팬에 토마토소스를 데우고 면을 넣어요.",
+      "소스와 면이 잘 섞이면 접시에 담아요.",
     ],
   },
   {
@@ -171,8 +263,16 @@ export const sampleRecipes: Recipe[] = [
     description: "계란만 있으면 만들 수 있는 기본 반찬",
     servings: 1,
     cookTimeMinutes: 10,
+    difficulty: "보통",
     tags: ["반찬", "계란"],
     ingredients: [{ name: "계란", quantity: 3, unit: "ea" }],
+    steps: [
+      "계란을 그릇에 풀고 소금을 조금 넣어요.",
+      "약한 불의 팬에 계란물을 얇게 부어요.",
+      "가장자리가 익기 시작하면 천천히 말아요.",
+      "남은 계란물을 이어 붓고 같은 방식으로 말아 익혀요.",
+      "한 김 식힌 뒤 먹기 좋은 크기로 썰어요.",
+    ],
   },
   {
     id: "bokkeum-udon",
@@ -180,11 +280,18 @@ export const sampleRecipes: Recipe[] = [
     description: "우동면과 김치를 볶아 만드는 빠른 면 요리",
     servings: 1,
     cookTimeMinutes: 12,
+    difficulty: "쉬움",
     tags: ["면", "볶음"],
     ingredients: [
       { name: "우동면", quantity: 1, unit: "pack" },
       { name: "김치", quantity: 80, unit: "g" },
       { name: "계란", quantity: 1, unit: "ea" },
+    ],
+    steps: [
+      "우동면은 뜨거운 물에 살짝 풀어 물기를 빼요.",
+      "팬에 김치를 넣고 중불에서 볶아요.",
+      "우동면을 넣고 김치와 함께 볶아요.",
+      "계란을 넣어 스크램블처럼 섞어 익혀요.",
     ],
   },
   {
@@ -193,10 +300,17 @@ export const sampleRecipes: Recipe[] = [
     description: "냉동만두와 계란으로 만드는 간단 국물 요리",
     servings: 1,
     cookTimeMinutes: 15,
+    difficulty: "쉬움",
     tags: ["국", "만두"],
     ingredients: [
       { name: "만두", quantity: 200, unit: "g" },
       { name: "계란", quantity: 1, unit: "ea" },
+    ],
+    steps: [
+      "냄비에 물을 넣고 끓여요.",
+      "물이 끓으면 만두를 넣고 중불에서 익혀요.",
+      "계란을 풀어 국물에 천천히 둘러 넣어요.",
+      "계란이 익으면 간을 보고 부족하면 소금을 조금 넣어요.",
     ],
   },
   {
@@ -205,10 +319,17 @@ export const sampleRecipes: Recipe[] = [
     description: "식빵과 계란으로 만드는 빠른 간식",
     servings: 1,
     cookTimeMinutes: 8,
+    difficulty: "쉬움",
     tags: ["간식", "브런치"],
     ingredients: [
       { name: "식빵", quantity: 2, unit: "slice" },
       { name: "계란", quantity: 1, unit: "ea" },
+    ],
+    steps: [
+      "계란을 풀어 소금을 조금 넣어요.",
+      "식빵을 계란물에 앞뒤로 적셔요.",
+      "팬에 식빵을 올리고 양면을 노릇하게 구워요.",
+      "접시에 담고 취향에 따라 케첩이나 잼을 곁들여요.",
     ],
   },
   {
@@ -217,11 +338,18 @@ export const sampleRecipes: Recipe[] = [
     description: "닭가슴살과 밥으로 만드는 단백질 덮밥",
     servings: 1,
     cookTimeMinutes: 12,
+    difficulty: "쉬움",
     tags: ["한그릇", "단백질"],
     ingredients: [
       { name: "밥", quantity: 1, unit: "serving" },
       { name: "닭가슴살", quantity: 120, unit: "g" },
       { name: "간장", quantity: 1, unit: "tbsp" },
+    ],
+    steps: [
+      "닭가슴살은 먹기 좋은 크기로 찢거나 썰어요.",
+      "팬에 닭가슴살과 간장을 넣고 살짝 볶아요.",
+      "따뜻한 밥을 그릇에 담아요.",
+      "볶은 닭가슴살을 밥 위에 올려 마무리해요.",
     ],
   },
   {
@@ -230,11 +358,19 @@ export const sampleRecipes: Recipe[] = [
     description: "김치를 활용한 간단한 전 요리",
     servings: 1,
     cookTimeMinutes: 15,
+    difficulty: "보통",
     tags: ["분식", "김치"],
     ingredients: [
       { name: "김치", quantity: 150, unit: "g" },
       { name: "부침가루", quantity: 100, unit: "g" },
       { name: "계란", quantity: 1, unit: "ea" },
+    ],
+    steps: [
+      "김치는 잘게 썰어 준비해요.",
+      "부침가루, 계란, 김치를 그릇에 넣고 물을 조금씩 더해 섞어요.",
+      "팬에 기름을 두르고 반죽을 얇게 펼쳐요.",
+      "아랫면이 노릇해지면 뒤집어 반대쪽도 익혀요.",
+      "키친타월에 잠깐 올려 기름을 빼고 먹어요.",
     ],
   },
   {
@@ -243,11 +379,18 @@ export const sampleRecipes: Recipe[] = [
     description: "참치캔으로 감칠맛을 더한 김치찌개",
     servings: 2,
     cookTimeMinutes: 20,
+    difficulty: "보통",
     tags: ["찌개", "참치"],
     ingredients: [
       { name: "참치캔", quantity: 1, unit: "ea" },
       { name: "김치", quantity: 200, unit: "g" },
       { name: "두부", quantity: 100, unit: "g" },
+    ],
+    steps: [
+      "김치는 먹기 좋은 크기로 자르고 두부는 썰어요.",
+      "냄비에 김치를 넣고 중불에서 먼저 볶아요.",
+      "물과 참치캔을 넣고 10분 정도 끓여요.",
+      "두부를 넣고 5분 더 끓인 뒤 간을 맞춰요.",
     ],
   },
 ];

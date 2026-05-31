@@ -3,11 +3,13 @@ import type { Recipe, RecommendationResult } from "../domain/types";
 interface RecipeRecommendationsProps {
   recommendations: RecommendationResult[];
   onCookRecipe: (recipe: Recipe) => void;
+  onViewRecipe: (recommendation: RecommendationResult) => void;
 }
 
 export function RecipeRecommendations({
   recommendations,
   onCookRecipe,
+  onViewRecipe,
 }: RecipeRecommendationsProps) {
   const hasCookableRecipe = recommendations.some(
     (recommendation) => recommendation.canCook,
@@ -85,15 +87,25 @@ export function RecipeRecommendations({
               </div>
             ) : null}
 
-            {recommendation.canCook ? (
+            <div className="recipe-card-actions">
               <button
                 type="button"
-                className="primary-action cook-action"
-                onClick={() => onCookRecipe(recommendation.recipe)}
+                className="secondary-action"
+                onClick={() => onViewRecipe(recommendation)}
               >
-                요리하기
+                레시피 보기
               </button>
-            ) : null}
+
+              {recommendation.canCook ? (
+                <button
+                  type="button"
+                  className="primary-action cook-action"
+                  onClick={() => onCookRecipe(recommendation.recipe)}
+                >
+                  요리하기
+                </button>
+              ) : null}
+            </div>
           </article>
         ))}
       </div>

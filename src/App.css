@@ -440,6 +440,12 @@ button:active {
   justify-self: start;
 }
 
+.recipe-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .empty-state {
   display: grid;
   gap: 4px;
@@ -527,6 +533,94 @@ button:active {
   margin-top: 16px;
 }
 
+.recipe-detail-modal {
+  width: min(640px, 100%);
+  max-height: calc(100svh - 32px);
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--modal-shadow);
+}
+
+.recipe-detail-topline {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.modal-close-action {
+  justify-self: start;
+}
+
+.recipe-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.recipe-detail-meta span {
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--soft);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.recipe-detail-section {
+  display: grid;
+  gap: 8px;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.recipe-detail-section h3 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.ingredient-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ingredient-chip-list li {
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: var(--soft);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.missing-chip-list li {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.recipe-step-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 22px;
+  color: var(--text);
+}
+
+.recipe-step-list li {
+  padding-left: 2px;
+}
+
 @media (min-width: 720px) {
   .app-shell {
     padding: 28px;
@@ -565,6 +659,11 @@ button:active {
   .modal-actions {
     grid-template-columns: auto auto;
     justify-content: end;
+  }
+
+  .recipe-detail-topline {
+    grid-template-columns: 1fr auto;
+    align-items: start;
   }
 }
 
@@ -608,5 +707,9 @@ button:active {
 
   .cook-action {
     justify-self: stretch;
+  }
+
+  .modal-close-action {
+    width: auto;
   }
 }
